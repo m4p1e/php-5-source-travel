@@ -658,6 +658,7 @@ static unsigned int _mem_block_end_magic   = 0;
 
 #define ZEND_MM_LARGE_BUCKET_INDEX(S) zend_mm_high_bit(S)
 
+static void *_zend_mm_alloc_int(zend_mm_heap *heap, size_t size ZEND_FILE_LINE_DC ZEND_FILE_LINE_ORIG_DC) ZEND_ATTRIBUTE_MALLOC ZEND_ATTRIBUTE_ALLOC_SIZE(2);
 static void _zend_mm_free_int(zend_mm_heap *heap, void *p ZEND_FILE_LINE_DC ZEND_FILE_LINE_ORIG_DC);
 static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_FILE_LINE_DC ZEND_FILE_LINE_ORIG_DC) ZEND_ATTRIBUTE_ALLOC_SIZE(3);
 
@@ -731,20 +732,20 @@ static inline void zend_mm_add_to_free_list(zend_mm_heap *heap, zend_mm_free_blo
 	ZEND_MM_SET_MAGIC(mm_block, MEM_BLOCK_FREED);
 
 	size = ZEND_MM_FREE_BLOCK_SIZE(mm_block);
-	if (EXPECTED(!ZEND_MM_SMALL_SIZE(size))) {
+	if (EXPECTED(!ZEND_MM_SMALL_SIZE(size))) {  //large_free_block
 		zend_mm_free_block **p;
 
-		index = ZEND_MM_LARGE_BUCKET_INDEX(size);
+		index = ZEND_MM_LARGE_BUCKET_INDEX(size);//为1的最高位
 		p = &heap->large_free_buckets[index];
 		mm_block->child[0] = mm_block->child[1] = NULL;
-		if (!*p) {
+		if (!*p) { //为空直接插入 ps: prev 和 next 只用于相同size的双链表
 			*p = mm_block;
 			mm_block->parent = p;
 			mm_block->prev_free_block = mm_block->next_free_block = mm_block;
 			heap->large_free_bitmap |= (ZEND_MM_LONG_CONST(1) << index);
 		} else {
 			size_t m;
-
+			//遍历bit树找到合适的位置
 			for (m = size << (ZEND_MM_NUM_BUCKETS - index); ; m <<= 1) {
 				zend_mm_free_block *prev = *p;
 
@@ -771,11 +772,13 @@ static inline void zend_mm_add_to_free_list(zend_mm_heap *heap, zend_mm_free_blo
 		zend_mm_free_block *prev, *next;
 
 		index = ZEND_MM_BUCKET_INDEX(size);
-
+		//取出heap->small_free_buckets[index]
 		prev = ZEND_MM_SMALL_FREE_BUCKET(heap, index);
 		if (prev->prev_free_block == prev) {
 			heap->free_bitmap |= (ZEND_MM_LONG_CONST(1) << index);
 		}
+		//heap->small_free_buckets[index] 和  heap->small_free_buckets[index+1]只保存了prev和next，这里是伪zend_mm_free_block,为了然后面结构顺畅。
+		//和pmalloc bins 一样
 		next = prev->next_free_block;
 
 		mm_block->prev_free_block = prev;
@@ -791,21 +794,23 @@ static inline void zend_mm_remove_from_free_list(zend_mm_heap *heap, zend_mm_fre
 
 	ZEND_MM_CHECK_MAGIC(mm_block, MEM_BLOCK_FREED);
 
+	//mm_block 属于large_free_buckets ,并且是键树的结点，这个地方有没有可能拿到small_free_buckets[index]上初始化的伪zend_mm_free_block会产生什么效果??
 	if (EXPECTED(prev == mm_block)) {
 		zend_mm_free_block **rp, **cp;
-
+	
 #if ZEND_MM_SAFE_UNLINKING
 		if (UNEXPECTED(next != mm_block)) {
-			zend_mm_panic("zend_mm_heap corrupted");
+			zend_mm_panic("zend_mm_heap corrupted"); //安全性检查 
 		}
 #endif
-
+		
 		rp = &mm_block->child[mm_block->child[1] != NULL];
 		prev = *rp;
+		//没有左右子树
 		if (EXPECTED(prev == NULL)) {
 			size_t index = ZEND_MM_LARGE_BUCKET_INDEX(ZEND_MM_FREE_BLOCK_SIZE(mm_block));
-
-			ZEND_MM_CHECK_TREE(mm_block);
+			//这里处理没有看明白
+			ZEND_MM_CHECK_TREE(mm_block); //父节点
 			*mm_block->parent = NULL;
 			if (mm_block->parent == &heap->large_free_buckets[index]) {
 				heap->large_free_bitmap &= ~(ZEND_MM_LONG_CONST(1) << index);
