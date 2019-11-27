@@ -658,7 +658,6 @@ static unsigned int _mem_block_end_magic   = 0;
 
 #define ZEND_MM_LARGE_BUCKET_INDEX(S) zend_mm_high_bit(S)
 
-static void *_zend_mm_alloc_int(zend_mm_heap *heap, size_t size ZEND_FILE_LINE_DC ZEND_FILE_LINE_ORIG_DC) ZEND_ATTRIBUTE_MALLOC ZEND_ATTRIBUTE_ALLOC_SIZE(2);
 static void _zend_mm_free_int(zend_mm_heap *heap, void *p ZEND_FILE_LINE_DC ZEND_FILE_LINE_ORIG_DC);
 static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_FILE_LINE_DC ZEND_FILE_LINE_ORIG_DC) ZEND_ATTRIBUTE_ALLOC_SIZE(3);
 
@@ -1811,7 +1810,7 @@ static zend_mm_free_block *zend_mm_search_large_block(zend_mm_heap *heap, size_t
 	size_t bitmap = heap->large_free_bitmap >> index;
 	zend_mm_free_block *p;
 
-	if (bitmap == 0) {
+	if (bitmap == 0) { 
 		return NULL;
 	}
 
@@ -1819,11 +1818,11 @@ static zend_mm_free_block *zend_mm_search_large_block(zend_mm_heap *heap, size_t
 		/* Search for best "large" free block */
 		zend_mm_free_block *rst = NULL;
 		size_t m;
-		size_t best_size = -1;
+		size_t best_size = -1; // 0xffffffffffffffff
 
 		best_fit = NULL;
 		p = heap->large_free_buckets[index];
-		for (m = true_size << (ZEND_MM_NUM_BUCKETS - index); ; m <<= 1) {
+		for (m = true_size << (ZEND_MM_NUM_BUCKETS - index); ; m <<= 1) {//第一次遍历，按照bit树遍历
 			if (UNEXPECTED(ZEND_MM_FREE_BLOCK_SIZE(p) == true_size)) {
 				return p->next_free_block;
 			} else if (ZEND_MM_FREE_BLOCK_SIZE(p) >= true_size &&
@@ -1831,11 +1830,11 @@ static zend_mm_free_block *zend_mm_search_large_block(zend_mm_heap *heap, size_t
 				best_size = ZEND_MM_FREE_BLOCK_SIZE(p);
 				best_fit = p;
 			}
-			if ((m & (ZEND_MM_LONG_CONST(1) << (ZEND_MM_NUM_BUCKETS-1))) == 0) {
+			if ((m & (ZEND_MM_LONG_CONST(1) << (ZEND_MM_NUM_BUCKETS-1))) == 0) { //取最高位
 				if (p->child[1]) {
-					rst = p->child[1];
+					rst = p->child[1];  //为什么只有rst右分叉呢？因为在遍历的过程中坚持找符合最小size的block，会优先走左边，如果左边找完了，那就需要回过来头来找离得最近的右子树。
 				}
-				if (p->child[0]) {
+				if (p->child[0]) { 
 					p = p->child[0];
 				} else {
 					break;
@@ -1847,8 +1846,9 @@ static zend_mm_free_block *zend_mm_search_large_block(zend_mm_heap *heap, size_t
 			}
 		}
 
+		//第二次遍历，上面策略没找到，回过头来看rst子树
 		for (p = rst; p; p = p->child[p->child[0] != NULL]) {
-			if (UNEXPECTED(ZEND_MM_FREE_BLOCK_SIZE(p) == true_size)) {
+			if (UNEXPECTED(ZEND_MM_FREE_BLOCK_SIZE(p) == true_size)) { //rst子树会存在这样一种情况吗？在我看来不可能
 				return p->next_free_block;
 			} else if (ZEND_MM_FREE_BLOCK_SIZE(p) > true_size &&
 			           ZEND_MM_FREE_BLOCK_SIZE(p) < best_size) {
@@ -1856,17 +1856,18 @@ static zend_mm_free_block *zend_mm_search_large_block(zend_mm_heap *heap, size_t
 				best_fit = p;
 			}
 		}
-
+		//前面两次都没能找到刚好符合size大小的，所以取一个最优解。
 		if (best_fit) {
 			return best_fit->next_free_block;
 		}
+		//好吧在对应的lagre_free_buckets[index]我们并不能找到，那就看后面的index
 		bitmap = bitmap >> 1;
 		if (!bitmap) {
 			return NULL;
 		}
 		index++;
 	}
-
+	//后面large_free_buckets存储的肯定都是比 large_free_buckets[index]要大的。遍历bit位找到最小的即可
 	/* Search for smallest "large" free block */
 	best_fit = p = heap->large_free_buckets[index + zend_mm_low_bit(bitmap)];
 	while ((p = p->child[p->child[0] != NULL])) {
