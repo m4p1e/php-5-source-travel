@@ -803,29 +803,31 @@ static inline void zend_mm_remove_from_free_list(zend_mm_heap *heap, zend_mm_fre
 			zend_mm_panic("zend_mm_heap corrupted"); //安全性检查 
 		}
 #endif
-		
+		//优先处理右子树
 		rp = &mm_block->child[mm_block->child[1] != NULL];
 		prev = *rp;
 		//没有左右子树
 		if (EXPECTED(prev == NULL)) {
 			size_t index = ZEND_MM_LARGE_BUCKET_INDEX(ZEND_MM_FREE_BLOCK_SIZE(mm_block));
-			//这里处理没有看明白
 			ZEND_MM_CHECK_TREE(mm_block); //父节点
 			*mm_block->parent = NULL;
 			if (mm_block->parent == &heap->large_free_buckets[index]) {
 				heap->large_free_bitmap &= ~(ZEND_MM_LONG_CONST(1) << index);
 		    }
 		} else {
+		//把最大的往前拿，这样做的好处是什么？ 还是约定俗成？
 			while (*(cp = &(prev->child[prev->child[1] != NULL])) != NULL) {
 				prev = *cp;
 				rp = cp;
 			}
+			//找到最大的那个节点，并把从父节点中删掉
 			*rp = NULL;
 
 subst_block:
 			ZEND_MM_CHECK_TREE(mm_block);
 			*mm_block->parent = prev;
 			prev->parent = mm_block->parent;
+			//原来的节点的左右子树分别接上
 			if ((prev->child[0] = mm_block->child[0])) {
 				ZEND_MM_CHECK_TREE(prev->child[0]);
 				prev->child[0]->parent = &prev->child[0];
@@ -836,7 +838,7 @@ subst_block:
 			}
 		}
 	} else {
-
+		//什么意思呢?
 #if ZEND_MM_SAFE_UNLINKING
 		if (UNEXPECTED(prev->next_free_block != mm_block) || UNEXPECTED(next->prev_free_block != mm_block)) {
 			zend_mm_panic("zend_mm_heap corrupted");
@@ -856,7 +858,7 @@ subst_block:
 			}
 		} else if (UNEXPECTED(mm_block->parent == ZEND_MM_REST_BLOCK)) {
 			heap->rest_count--;
-		} else if (UNEXPECTED(mm_block->parent != NULL)) {
+		} else if (UNEXPECTED(mm_block->parent != NULL)) {//什么情况下会出现这种状况
 			goto subst_block;
 		}
 	}
