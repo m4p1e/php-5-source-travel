@@ -29,7 +29,7 @@
 		<Mark
 			Name="1817511541909052119102"
 			Comment="assign_parse"
-			File="Zend\zend_language_parser.y"
+			File="php-src\Zend\zend_language_parser.y"
 			Line="777"
 			Column="3"
 			LineOffset="0"
@@ -37,7 +37,7 @@
 		<Mark
 			Name="1804407395609052119102"
 			Comment="compiler_globals_struct"
-			File="Zend\zend_globals.h"
+			File="php-src\Zend\zend_globals.h"
 			Line="71"
 			Column="7"
 			Symbol="_zend_compiler_globals"
@@ -48,7 +48,7 @@
 		<Mark
 			Name="1811193903809052119102"
 			Comment="CV_parse"
-			File="Zend\zend_language_parser.y"
+			File="php-src\Zend\zend_language_parser.y"
 			Line="1172"
 			Column="25"
 			LineOffset="0"
@@ -56,7 +56,7 @@
 		<Mark
 			Name="7652795051552022119102"
 			Comment="emalloc"
-			File="Zend\zend_alloc.c"
+			File="php-src\Zend\zend_alloc.c"
 			Line="660"
 			Column="13"
 			Symbol="_zend_mm_alloc_int"
@@ -67,7 +67,7 @@
 		<Mark
 			Name="3048088630821052119102"
 			Comment="init_pzval"
-			File="Zend\zend.h"
+			File="php-src\Zend\zend.h"
 			Line="749"
 			Column="13"
 			LineOffset="0"
@@ -75,7 +75,7 @@
 		<Mark
 			Name="1777120835209052119102"
 			Comment="zend_do_begin_variable_parse"
-			File="Zend\zend_compile.c"
+			File="php-src\Zend\zend_compile.c"
 			Line="1296"
 			Column="5"
 			Symbol="zend_do_begin_variable_parse"
