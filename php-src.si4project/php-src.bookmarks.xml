@@ -91,5 +91,16 @@
 			Column="2"
 			LineOffset="0"
 			/>
+		<Mark
+			Name="0965509673654182119102"
+			Comment="zend_mm_heap"
+			File="php-src\Zend\zend_alloc.c"
+			Line="414"
+			Column="7"
+			Symbol="_zend_mm_heap"
+			SymbolInstance="0"
+			SymbolType="Structure"
+			LineOffset="0"
+			/>
 	</Bookmarks>
 </SourceInsightBookmarks>
