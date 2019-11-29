@@ -1,3 +1,144 @@
----- RE2C_FLAGS Matches (2 in 1 files) ----
-Makefile (php-src\win32\build) line 58 : 	$(RE2C) $(RE2C_FLAGS) --no-generation-date --case-inverted -cbdFt Zend/zend_ini_scanner_defs.h -oZend/zend_ini_scanner.c Zend/zend_ini_scanner.l
-Makefile (php-src\win32\build) line 61 : 	$(RE2C) $(RE2C_FLAGS) --no-generation-date --case-inverted -cbdFt Zend/zend_language_scanner_defs.h -oZend/zend_language_scanner.c Zend/zend_language_scanner.l
+---- unset Matches (152 in 41 files) ----
+basic_functions.c (php-src\ext\standard) line 4108 : 	if (!p) { /* no '=' means we want to unset it */
+build_precommand.php (php-src\ext\phar) line 32 : 	unset($f[0]);
+build_precommand.php (php-src\ext\phar) line 35 : 		unset($f[$c--]);
+build_precommand.php (php-src\ext\phar) line 47 : 		unset($f[$c--]);
+Interop_Client.outputTable in client_round2_interop.php (php-src\ext\soap\interop) :                 unset($this->endpoints[$endpoint]);
+disp_deletememberbyname in com_wrapper.c (php-src\ext\com_dotnet) : 	/* TODO: unset */
+disp_deletememberbydispid in com_wrapper.c (php-src\ext\com_dotnet) : 	/* TODO: unset */
+create.php (php-src\ext\zip\examples) line 23 : unset($zip);
+dba_array.php (php-src\ext\spl\examples) line 40 : 		unset($dba);
+emptyUnsetUndefNull.txt (php-src\scripts\dev\generate-phpt\src\codeSnippets) line 2 : unset($unset_var);
+emptyUnsetUndefNull.txt (php-src\scripts\dev\generate-phpt\src\codeSnippets) line 5 :   'unset var' => @$unset_var,
+ZEND_INI_MH in fopen_wrappers.c (php-src\main) : 	/* Shortcut: When we have a open_basedir and someone tries to unset, we know it'll fail */
+fpm_conf.c (php-src\sapi\fpm\fpm) line 79 : 	.process_priority = 64, /* 64 means unset */
+fpm_worker_pool_config_alloc in fpm_conf.c (php-src\sapi\fpm\fpm) : 	wp->config->process_priority = 64; /* 64 means unset */
+globals.inc (php-src\Zend\tests) line 9 : unset($_SERVER['PHP_SELF']);
+globals.inc (php-src\Zend\tests) line 12 : unset($_SERVER);
+html_table_gen.php (php-src\ext\standard\html_tables) line 467 : unset($v);
+html_table_gen.php (php-src\ext\standard\html_tables) line 485 : 	unset($v["default"]);
+intl_error.c (php-src\ext\intl) line 88 :  * Set last error code to 0 and unset last error message
+make_phar_dot_phar in mkdist.php (php-src\win32\build) : 	unset($stub[0]); // remove hashbang
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 2062 :        unset  from  within  the  pattern  (see the detailed description in the
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 2243 :        (2)  At run time, a back reference to an unset subpattern group matches
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 2827 :        and (?-J) set and unset the local PCRE_DUPNAMES option, respectively.
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 3369 :        compile time,  it  cannot  be  unset  at  matching  time.  The  use  of
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 3930 :        When  any of these functions encounter a substring that is unset, which
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 3935 :        tive for unset substrings.
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 4638 :        unset, but in PCRE it is set to "b".
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 5635 :        PCRE_MULTILINE option is unset. Inside a  character  class,  circumflex
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 5992 :        ble to unset these options by preceding the letter with a hyphen, and a
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 5996 :        hyphen, the option is unset.
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 6574 :        ence to an unset value matches an empty string.
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 7047 :        unset,  even  if  it was (temporarily) set at a deeper level during the
+pcre.txt (php-src\ext\pcre\pcrelib\doc) line 7935 :          (?-...)         unset option(s)
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) : matches a non-fixed char first char; reqchar just remains unset if we never
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :             /* If the minimum is zero, mark it as possessive, then unset the
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :       int i, set, unset, namelen;
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :         set = unset = 0;
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :             case CHAR_MINUS: optset = &unset; break;
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :         newoptions = (options | set) & (~unset);
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :     group whose condition is an assertion, cd->iscondassert is set. We unset it
+compile_branch in pcre_compile.c (php-src\ext\pcre\pcrelib) :         unset variables caused by the jump to HANDLE_NUMERICAL_RECURSION. In
+match in pcre_exec.c (php-src\ext\pcre\pcrelib) :       unset and then update the high water mark. */
+match in pcre_exec.c (php-src\ext\pcre\pcrelib) :         unset. In earlier versions of PCRE, all the offsets were unset at the
+match in pcre_exec.c (php-src\ext\pcre\pcrelib) :         assertions can cause a value to be set that should later be unset.
+match in pcre_exec.c (php-src\ext\pcre\pcrelib) :         so must be unset when 2 is set. (If there is no group 2, there is no
+match in pcre_exec.c (php-src\ext\pcre\pcrelib) :     loops). If the reference is unset, there are two possibilities:
+match in pcre_exec.c (php-src\ext\pcre\pcrelib) :     means the reference is unset in non-Java-compatible mode. If the minimum is
+pcre_exec in pcre_exec.c (php-src\ext\pcre\pcrelib) : initialize them to avoid reading uninitialized locations. Also, unset the
+pcre_exec in pcre_exec.c (php-src\ext\pcre\pcrelib) : at run time, so we have to test for anchoring. The first char may be unset for
+pcre_exec in pcre_exec.c (php-src\ext\pcre\pcrelib) :   those at the end that need unsetting here. We can't just unset them all at
+find_minlength in pcre_study.c (php-src\ext\pcre\pcrelib) :     If PCRE_JAVASCRIPT_COMPAT is set, a backreference to an unset bracket
+pcre_study in pcre_study.c (php-src\ext\pcre\pcrelib) :   /* Set the start bits always, to avoid unset memory errors if the
+pear2coverage.phar.php (php-src\ext\phar\tests\files) line 604 :         unset($xdebugs[0]);
+pear2coverage.phar.php (php-src\ext\phar\tests\files) line 658 :         unset($this->source[0]); // make source array indexed by line number
+pear2coverage.phar.php (php-src\ext\phar\tests\files) line 886 :         unset($xdebugs[0]);
+pharcommand.inc (php-src\ext\phar\phar) line 161 : 			unset($phar_args['y']);
+pharcommand.inc (php-src\ext\phar\phar) line 958 : 		unset($phar[$entry]);
+pharcommand.inc (php-src\ext\phar\phar) line 1401 : 				unset($meta[$index]);
+pharcommand.inc (php-src\ext\phar\phar) line 1419 : 				unset($meta[$index]);
+PHP_METHOD in phar_object.c (php-src\ext\phar) : 		zend_throw_exception_ex(phar_ce_PharException, 0 TSRMLS_CC, "phar archive \"%s\" has open file handles or objects.  fclose() all file handles, and unset() all objects prior to calling unlinkArchive()", fname);
+phpdbg_print_changed_zval in phpdbg_watch.c (php-src\sapi\phpdbg) : 						phpdbg_notice("Watchpoint %s was unset, removing watchpoint", watch->str);
+phpdbg_print_changed_zval in phpdbg_watch.c (php-src\sapi\phpdbg) : 						phpdbg_notice("Watchpoint %s was unset, removing watchpoint", watch->str);
+php_xmlreader_set_relaxng_schema in php_xmlreader.c (php-src\ext\xmlreader) : 			/* unset the associated relaxNG context and schema if one exists */
+recursiveiteratoriterator.inc (php-src\ext\spl\internal) line 65 : 			unset($this->ait[$this->count--]);
+recursiveiteratoriterator.inc (php-src\ext\spl\internal) line 137 : 					unset($sub);
+recursiveiteratoriterator.inc (php-src\ext\spl\internal) line 147 : 				unset($this->ait[$this->count--]);
+system_with_timeout in run-tests.php (php-src) : 	unset($pipes[0]);
+run_test in run-tests.php (php-src) : 				unset($section_text['FILEEOF']);
+run_test in run-tests.php (php-src) : 						unset($section_text[$key]);
+run_test in run-tests.php (php-src) : 				"unset REQUEST_METHOD; unset QUERY_STRING; unset PATH_TRANSLATED; unset SCRIPT_FILENAME; unset REQUEST_METHOD;": "";
+run_test in run-tests.php (php-src) : 					"unset REQUEST_METHOD; unset QUERY_STRING; unset PATH_TRANSLATED; unset SCRIPT_FILENAME; unset REQUEST_METHOD;": "";
+junit_finish_timer in run-tests.php (php-src) : 	unset($JUNIT['files'][$file_name]['start']);
+TestsConfiguration in run-tests.php (php-src\sapi\phpdbg\tests) : 		public function offsetUnset($offset)		{ unset($this->options[$offset]); }
+testHarness.parseArgs in server-tests.php (php-src) : 			if (isset($value)) unset($value);
+ArrayObject in spl.php (php-src\ext\spl) : 	/** @param $index offset to unset
+spl.php (php-src\ext\spl) line 730 :  * This iterator allows to unset and modify values and keys while iterating
+ArrayIterator in spl.php (php-src\ext\spl) : 	/** @param $index offset to unset
+splobjectstorage.inc (php-src\ext\spl\internal) line 131 : 					unset($this->storage[$idx]);
+test.php (php-src\sapi\phpdbg) line 87 : unset($obj);
+unset.inc (php-src\Zend\tests) line 3 : unset($x)
+upgrade-pcre.php (php-src\ext\pcre) line 88 : 	unset($dirorig[$k]);
+upgrade-pcre.php (php-src\ext\pcre) line 92 : 	unset($dirorig[$k]);
+write16.phar.inc (php-src\ext\phar\tests\cache_list\files) line 10 : unset($p["test.txt"]);
+zend_API.h (php-src\Zend) line 397 : /* unset() functions are only suported for legacy modules and null() functions should be used */
+ZEND_FUNCTION in zend_builtin_functions.c (php-src\Zend) : 	if (Z_TYPE_P(error_handler) != IS_NULL) { /* NULL == unset */
+ZEND_FUNCTION in zend_builtin_functions.c (php-src\Zend) : 	if (Z_TYPE_P(error_handler) == IS_NULL) { /* unset user-defined handler */
+ZEND_FUNCTION in zend_builtin_functions.c (php-src\Zend) : 	if (Z_TYPE_P(exception_handler) != IS_NULL) { /* NULL == unset */
+ZEND_FUNCTION in zend_builtin_functions.c (php-src\Zend) : 	if (Z_TYPE_P(exception_handler) == IS_NULL) { /* unset user-defined handler */
+zend_traits_copy_functions in zend_compile.c (php-src\Zend) : 			/* Scope unset or equal to the function we compare to, and the alias applies to fn */
+zend_traits_copy_functions in zend_compile.c (php-src\Zend) : 				/* Scope unset or equal to the function we compare to, and the alias applies to fn */
+zend_compile.h (php-src\Zend) line 772 : /* unset types */
+zend_fetch_dimension_address in zend_execute.c (php-src\Zend) : 				zend_error(E_WARNING, "Cannot unset offset in a non-array variable");
+zend_iterators.c (php-src\Zend) line 37 : 	NULL, /* unset prop */
+zend_iterators.c (php-src\Zend) line 39 : 	NULL, /* unset dim */
+zend_std_unset_static_property in zend_object_handlers.c (php-src\Zend) : 	zend_error_noreturn(E_ERROR, "Attempt to unset static property %s::$%s", ce->name, property_name);
+ZEND_VM_HANDLER in zend_vm_def.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_VM_HANDLER in zend_vm_def.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_VM_HANDLER in zend_vm_def.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_VM_HANDLER in zend_vm_def.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_VAR_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_VAR_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_VAR_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_VAR_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_VAR_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_VAR_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_VAR_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_VAR_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_VAR_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_VAR_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_VAR_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_VAR_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_VAR_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_VAR_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_VAR_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_VAR_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_UNSET_DIM_SPEC_UNUSED_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_UNUSED_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_UNUSED_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_UNSET_DIM_SPEC_UNUSED_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_UNUSED_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_UNUSED_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_UNSET_DIM_SPEC_UNUSED_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_UNUSED_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_UNUSED_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_UNSET_DIM_SPEC_UNUSED_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_UNUSED_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_UNUSED_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_CV_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_CV_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_CV_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_CV_CONST_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_CV_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_CV_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_CV_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_CV_TMP_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_CV_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_CV_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_CV_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_CV_VAR_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
+ZEND_FETCH_DIM_UNSET_SPEC_CV_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 		zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_DIM_SPEC_CV_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 						zend_error(E_WARNING, "Illegal offset type in unset");
+ZEND_UNSET_DIM_SPEC_CV_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error_noreturn(E_ERROR, "Cannot unset string offsets");
+ZEND_UNSET_OBJ_SPEC_CV_CV_HANDLER in zend_vm_execute.h (php-src\Zend) : 				zend_error(E_NOTICE, "Trying to unset property of non-object");
