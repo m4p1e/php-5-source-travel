@@ -2159,10 +2159,10 @@ static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_
 	if (UNEXPECTED(true_size < size)) {
 		goto out_of_memory;
 	}
-
+	//缩小mm_block
 	if (true_size <= orig_size) {
 		size_t remaining_size = orig_size - true_size;
-
+		//缩小的size大于mm_block_header才分割，反之直接返回
 		if (remaining_size >= ZEND_MM_ALIGNED_MIN_HEADER_SIZE) {
 			zend_mm_free_block *new_free_block;
 
@@ -2186,7 +2186,7 @@ static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_
 		HANDLE_UNBLOCK_INTERRUPTIONS();
 		return p;
 	}
-
+	//扩大mm_block
 #if ZEND_MM_CACHE
 	if (ZEND_MM_SMALL_SIZE(true_size)) {
 		size_t index = ZEND_MM_BUCKET_INDEX(true_size);
@@ -2205,7 +2205,7 @@ static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_
 			ZEND_MM_SET_DEBUG_INFO(best_fit, size, 1, 0);
 
 			ptr = ZEND_MM_DATA_OF(best_fit);
-
+			//复制到新mm_block
 #if ZEND_DEBUG || ZEND_MM_HEAP_PROTECTION
 			memcpy(ptr, p, mm_block->debug.size);
 #else
@@ -2213,7 +2213,7 @@ static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_
 #endif
 
 			heap->cached -= true_size - orig_size;
-
+			//原来mm_block 就放到对应的cache里面去了
 			index = ZEND_MM_BUCKET_INDEX(orig_size);
 			cache = &heap->cache[index];
 
@@ -2237,6 +2237,7 @@ static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_
 	if (ZEND_MM_IS_FREE_BLOCK(next_block)) {
 		ZEND_MM_CHECK_COOKIE(next_block);
 		ZEND_MM_CHECK_BLOCK_LINKAGE(next_block);
+	//如果向前可以扩展的话，先向前扩展
 		if (orig_size + ZEND_MM_FREE_BLOCK_SIZE(next_block) >= true_size) {
 			size_t block_size = orig_size + ZEND_MM_FREE_BLOCK_SIZE(next_block);
 			size_t remaining_size = block_size - true_size;
@@ -2271,10 +2272,10 @@ static void *_zend_mm_realloc_int(zend_mm_heap *heap, void *p, size_t size ZEND_
 			return p;
 		} else if (ZEND_MM_IS_FIRST_BLOCK(mm_block) &&
 				   ZEND_MM_IS_GUARD_BLOCK(ZEND_MM_BLOCK_AT(next_block, ZEND_MM_FREE_BLOCK_SIZE(next_block)))) {
-			zend_mm_remove_from_free_list(heap, (zend_mm_free_block *) next_block);
+			zend_mm_remove_from_free_list(heap, (zend_mm_free_block *) next_block);//整个segment大小都不够扩容，最后一个block在free_list里面，先拿出来
 			goto realloc_segment;
 		}
-	} else if (ZEND_MM_IS_FIRST_BLOCK(mm_block) && ZEND_MM_IS_GUARD_BLOCK(next_block)) {
+	} else if (ZEND_MM_IS_FIRST_BLOCK(mm_block) && ZEND_MM_IS_GUARD_BLOCK(next_block)) {//扩容segment，和上面一样，只是最后一个block在不是free状态
 		zend_mm_segment *segment;
 		zend_mm_segment *segment_copy;
 		size_t segment_size;
@@ -2307,7 +2308,7 @@ realloc_segment:
 #endif
 			return NULL;
 		}
-
+		//竟然是系统调用！！！
 		segment = ZEND_MM_STORAGE_REALLOC(segment_copy, segment_size);
 		if (!segment) {
 #if ZEND_MM_CACHE
@@ -2328,11 +2329,11 @@ out_of_memory:
 		}
 
 		segment->size = segment_size;
-
+		//系统realloc以后可能segment地址变了
 		if (segment != segment_copy) {
 			zend_mm_segment **seg = &heap->segments_list;
 			while (*seg != segment_copy) {
-				seg = &(*seg)->next_segment;
+				seg = &(*seg)->next_segment;//单链表的二级指针遍历！！ 像linus说的那样！！
 			}
 			*seg = segment;
 			mm_block = (zend_mm_block *) ((char *) segment + ZEND_MM_ALIGNED_SEGMENT_SIZE);
@@ -2370,7 +2371,7 @@ out_of_memory:
 		HANDLE_UNBLOCK_INTERRUPTIONS();
 		return ZEND_MM_DATA_OF(mm_block);
 	}
-
+	//最后直接重新申请，我以为还有往后合并，往后合并似乎不太合理，glibc也要涉及到内存分配。
 	ptr = _zend_mm_alloc_int(heap, size ZEND_FILE_LINE_RELAY_CC ZEND_FILE_LINE_ORIG_RELAY_CC);
 #if ZEND_DEBUG || ZEND_MM_HEAP_PROTECTION
 	memcpy(ptr, p, mm_block->debug.size);
